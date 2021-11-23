@@ -6,6 +6,10 @@ import { CreateAuthorInput } from './dto/create-author.input';
 import { UpdateAuthorInput } from './dto/update-author.input';
 import { Author } from './entities/author.entity';
 
+interface IFindAuthorFilters {
+  id?: string;
+  bookID?: string;
+}
 @Injectable()
 export class AuthorService {
   create(createAuthorInput: CreateAuthorInput) {
@@ -18,7 +22,7 @@ export class AuthorService {
   }
 
   async findOne(id: string): Promise<Author> {
-    const user = await this.authorsRepository.findOne(id);
+    const user = await this.authorsRepository.findOne({ id });
     if (!user) {
       throw new NotFoundException(`Author #${id} not found`);
     }
